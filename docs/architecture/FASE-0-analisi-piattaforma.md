@@ -34,12 +34,12 @@ EmErGent v2 è una piattaforma SaaS che consente a chiunque — dal founder non 
 
 Il prodotto compete direttamente con Emergent, Lovable, Bolt, Replit AI e v0, e si differenzia su quattro assi:
 
-| Asse | Differenziatore |
-|---|---|
-| **Trasparenza** | Il codice generato è sempre visibile, editabile e di qualità production-grade; nessuna "black box" |
-| **Orchestrazione agentica** | Pipeline multi-agente specializzata (planner → architect → builder → review → test → fix) invece di un singolo LLM monolitico |
-| **Ownership** | L'utente possiede il codice: export, versioning, snapshot, rollback sono cittadini di prima classe |
-| **Estendibilità** | Architettura a moduli con contratti espliciti: nuovi agenti, nuovi runtime e nuovi target di deploy si aggiungono senza toccare il core |
+| Asse                        | Differenziatore                                                                                                                         |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| **Trasparenza**             | Il codice generato è sempre visibile, editabile e di qualità production-grade; nessuna "black box"                                      |
+| **Orchestrazione agentica** | Pipeline multi-agente specializzata (planner → architect → builder → review → test → fix) invece di un singolo LLM monolitico           |
+| **Ownership**               | L'utente possiede il codice: export, versioning, snapshot, rollback sono cittadini di prima classe                                      |
+| **Estendibilità**           | Architettura a moduli con contratti espliciti: nuovi agenti, nuovi runtime e nuovi target di deploy si aggiungono senza toccare il core |
 
 ### 1.2 Proposta di valore
 
@@ -68,7 +68,7 @@ Il prodotto compete direttamente con Emergent, Lovable, Bolt, Replit AI e v0, e 
 - Marketplace pubblico di template di terze parti
 - Plugin SDK per agenti custom sviluppati dagli utenti
 
-Questa esclusione è una decisione, non un'omissione: il perimetro v1 è già il minimo prodotto *vendibile* a un cliente enterprise, e ogni elemento fuori perimetro poggia su contratti (agent registry, runtime adapter, deploy adapter) che la v1 definisce ma non esaurisce.
+Questa esclusione è una decisione, non un'omissione: il perimetro v1 è già il minimo prodotto _vendibile_ a un cliente enterprise, e ogni elemento fuori perimetro poggia su contratti (agent registry, runtime adapter, deploy adapter) che la v1 definisce ma non esaurisce.
 
 ---
 
@@ -76,19 +76,19 @@ Questa esclusione è una decisione, non un'omissione: il perimetro v1 è già il
 
 ### 2.1 Personas primarie
 
-| Persona | Profilo | Obiettivo | Bisogni chiave |
-|---|---|---|---|
-| **Maker** (non tecnico) | Founder, product manager, designer | Validare un'idea con un prodotto funzionante | Zero configurazione, chat come unica interfaccia, deploy immediato, costi chiari |
-| **Developer** | Sviluppatore professionista freelance o in team | Accelerare drasticamente la produzione | Codice leggibile, IDE completo, controllo fine (edit manuale + AI), export/Git |
-| **Team Lead / Agency** | Responsabile di un team che produce app per clienti | Standardizzare e parallelizzare le commesse | Workspace condivisi, RBAC, template aziendali, audit, fatturazione centralizzata |
-| **Enterprise Admin** | IT/Platform owner in azienda strutturata | Governance dell'adozione AI | SSO/OAuth, RBAC granulare, audit log, gestione API key e modelli, sicurezza |
+| Persona                 | Profilo                                             | Obiettivo                                    | Bisogni chiave                                                                   |
+| ----------------------- | --------------------------------------------------- | -------------------------------------------- | -------------------------------------------------------------------------------- |
+| **Maker** (non tecnico) | Founder, product manager, designer                  | Validare un'idea con un prodotto funzionante | Zero configurazione, chat come unica interfaccia, deploy immediato, costi chiari |
+| **Developer**           | Sviluppatore professionista freelance o in team     | Accelerare drasticamente la produzione       | Codice leggibile, IDE completo, controllo fine (edit manuale + AI), export/Git   |
+| **Team Lead / Agency**  | Responsabile di un team che produce app per clienti | Standardizzare e parallelizzare le commesse  | Workspace condivisi, RBAC, template aziendali, audit, fatturazione centralizzata |
+| **Enterprise Admin**    | IT/Platform owner in azienda strutturata            | Governance dell'adozione AI                  | SSO/OAuth, RBAC granulare, audit log, gestione API key e modelli, sicurezza      |
 
 ### 2.2 Personas secondarie
 
-| Persona | Ruolo rispetto alla piattaforma |
-|---|---|
-| **Platform Operator** (interno) | Gestisce l'infrastruttura, monitora SLO, interviene su incident |
-| **Support Engineer** (interno) | Diagnostica problemi degli utenti tramite log, tracing e stato delle sessioni |
+| Persona                         | Ruolo rispetto alla piattaforma                                                                       |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| **Platform Operator** (interno) | Gestisce l'infrastruttura, monitora SLO, interviene su incident                                       |
+| **Support Engineer** (interno)  | Diagnostica problemi degli utenti tramite log, tracing e stato delle sessioni                         |
 | **End user delle app generate** | Non interagisce con la piattaforma, ma le app deployate devono rispettare performance e disponibilità |
 
 ### 2.3 Implicazioni architetturali delle personas
@@ -152,7 +152,7 @@ Gestione profilo, API key personali, scelta modelli AI, notifiche, sicurezza (2F
 
 ## 4. Moduli della piattaforma
 
-La piattaforma è decomposta in **14 moduli** (bounded context), ciascuno con contratto esplicito. La decomposizione segue il criterio: *un modulo = una ragione di cambiamento*.
+La piattaforma è decomposta in **14 moduli** (bounded context), ciascuno con contratto esplicito. La decomposizione segue il criterio: _un modulo = una ragione di cambiamento_.
 
 ```mermaid
 graph TB
@@ -202,22 +202,22 @@ graph TB
     OBS -.-> DEP
 ```
 
-| # | Modulo | Fase di realizzazione |
-|---|---|---|
-| M1 | Identity & Access (IAM) | FASE 2 |
-| M2 | Workspace Manager | FASE 4 |
-| M3 | Project Management | FASI 2, 14 |
-| M4 | Agent Engine | FASE 3 |
-| M5 | Virtual Filesystem | FASE 5 |
-| M6 | Runtime / Sandbox | FASE 6 |
-| M7 | Realtime Gateway (Code Streaming) | FASE 7 |
-| M8 | Preview Service | FASE 11 |
-| M9 | Deploy Service | FASE 12 |
-| M10 | Template Service | FASE 15 |
-| M11 | Billing & Credits | FASE 16 |
-| M12 | Notification Service | FASI 13, 17 |
-| M13 | Observability | FASE 21 |
-| M14 | Web App (Frontend) | FASI 8–11, 13–15, 17 |
+| #   | Modulo                            | Fase di realizzazione |
+| --- | --------------------------------- | --------------------- |
+| M1  | Identity & Access (IAM)           | FASE 2                |
+| M2  | Workspace Manager                 | FASE 4                |
+| M3  | Project Management                | FASI 2, 14            |
+| M4  | Agent Engine                      | FASE 3                |
+| M5  | Virtual Filesystem                | FASE 5                |
+| M6  | Runtime / Sandbox                 | FASE 6                |
+| M7  | Realtime Gateway (Code Streaming) | FASE 7                |
+| M8  | Preview Service                   | FASE 11               |
+| M9  | Deploy Service                    | FASE 12               |
+| M10 | Template Service                  | FASE 15               |
+| M11 | Billing & Credits                 | FASE 16               |
+| M12 | Notification Service              | FASI 13, 17           |
+| M13 | Observability                     | FASE 21               |
+| M14 | Web App (Frontend)                | FASI 8–11, 13–15, 17  |
 
 ---
 
@@ -259,7 +259,7 @@ Ogni modulo dichiara: responsabilità (cosa possiede), collaborazioni (cosa cons
 
 - **Possiede:** ciclo di vita delle sandbox isolate (create/start/stop/restart/destroy), install dipendenze, build, run, cattura log, environment variables e secrets iniettati, Process Manager con health check e restart policy.
 - **Consuma:** VFS (materializzazione dei file), container runtime dell'infrastruttura, Realtime Gateway (streaming log).
-- **Non fa:** decidere *cosa* eseguire (lo decide l'Agent Engine o l'utente); servire la preview all'utente finale (Preview Service).
+- **Non fa:** decidere _cosa_ eseguire (lo decide l'Agent Engine o l'utente); servire la preview all'utente finale (Preview Service).
 
 ### M7 — Realtime Gateway
 
@@ -316,26 +316,26 @@ I moduli logici (§4–5) vengono dispiegati in **unità deployabili**. Scelta c
 
 ### 6.1 Servizi applicativi
 
-| Servizio | Contenuto | Tecnologia | Scaling |
-|---|---|---|---|
-| `web` | Frontend SPA (M14) | React + Vite + Tailwind, servita da CDN/静 static hosting | CDN, stateless |
-| `api` | Core API: IAM, Workspace, Project, Template, Billing, Notification, VFS-API, orchestrazione job (M1–M3, M5-api, M10–M12) | NestJS (modular monolith), REST + OpenAPI | Orizzontale, stateless |
-| `realtime` | Realtime Gateway (M7): WebSocket + SSE | NestJS (gateway dedicato) + Redis pub/sub | Orizzontale con sticky-less fan-out via Redis |
-| `agent-worker` | Agent Engine (M4): consuma job di run agentiche | Node.js/TypeScript worker su BullMQ | Orizzontale in base alla coda |
-| `sandbox-orchestrator` | Runtime (M6): gestisce container sandbox | Node.js/TypeScript + Docker API (containerd-ready) | Per-nodo, con pool di sandbox |
-| `preview-proxy` | Preview Service (M8): reverse proxy autenticato verso le sandbox | Node.js (proxy dedicato) | Orizzontale |
-| `deploy-worker` | Deploy Service (M9): build produzione e pubblicazione | Node.js/TypeScript worker su BullMQ | Orizzontale |
+| Servizio               | Contenuto                                                                                                                | Tecnologia                                             | Scaling                                       |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------ | --------------------------------------------- |
+| `web`                  | Frontend SPA (M14)                                                                                                       | React + Vite + Tailwind, servita da CDN/static hosting | CDN, stateless                                |
+| `api`                  | Core API: IAM, Workspace, Project, Template, Billing, Notification, VFS-API, orchestrazione job (M1–M3, M5-api, M10–M12) | NestJS (modular monolith), REST + OpenAPI              | Orizzontale, stateless                        |
+| `realtime`             | Realtime Gateway (M7): WebSocket + SSE                                                                                   | NestJS (gateway dedicato) + Redis pub/sub              | Orizzontale con sticky-less fan-out via Redis |
+| `agent-worker`         | Agent Engine (M4): consuma job di run agentiche                                                                          | Node.js/TypeScript worker su BullMQ                    | Orizzontale in base alla coda                 |
+| `sandbox-orchestrator` | Runtime (M6): gestisce container sandbox                                                                                 | Node.js/TypeScript + Docker API (containerd-ready)     | Per-nodo, con pool di sandbox                 |
+| `preview-proxy`        | Preview Service (M8): reverse proxy autenticato verso le sandbox                                                         | Node.js (proxy dedicato)                               | Orizzontale                                   |
+| `deploy-worker`        | Deploy Service (M9): build produzione e pubblicazione                                                                    | Node.js/TypeScript worker su BullMQ                    | Orizzontale                                   |
 
 ### 6.2 Servizi infrastrutturali
 
-| Servizio | Ruolo |
-|---|---|
-| **PostgreSQL** | Database primario: tutte le entità di dominio, ledger crediti, metadata VFS |
-| **Redis** | Code (BullMQ), pub/sub per realtime fan-out, cache, rate limiting distribuito |
-| **Object Storage (S3-compatibile / MinIO in dev)** | Blob dei file VFS, snapshot, artifact di deploy, attachment chat |
-| **Container Runtime (Docker in v1)** | Esecuzione sandbox isolate e build |
-| **Reverse Proxy / Edge (Caddy)** | TLS automatico, routing domini custom delle app deployate, routing preview |
-| **Stack observability (OTel Collector, Prometheus, Grafana, Loki)** | Metriche, log, trace |
+| Servizio                                                            | Ruolo                                                                         |
+| ------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| **PostgreSQL**                                                      | Database primario: tutte le entità di dominio, ledger crediti, metadata VFS   |
+| **Redis**                                                           | Code (BullMQ), pub/sub per realtime fan-out, cache, rate limiting distribuito |
+| **Object Storage (S3-compatibile / MinIO in dev)**                  | Blob dei file VFS, snapshot, artifact di deploy, attachment chat              |
+| **Container Runtime (Docker in v1)**                                | Esecuzione sandbox isolate e build                                            |
+| **Reverse Proxy / Edge (Caddy)**                                    | TLS automatico, routing domini custom delle app deployate, routing preview    |
+| **Stack observability (OTel Collector, Prometheus, Grafana, Loki)** | Metriche, log, trace                                                          |
 
 ### 6.3 Contratti tra servizi
 
@@ -474,19 +474,19 @@ graph TB
 
 ### 8.2 Stack tecnologico e motivazioni sintetiche
 
-| Layer | Scelta | Motivazione principale (dettaglio in ADR §12) |
-|---|---|---|
-| Monorepo | pnpm workspaces + Turborepo | Cache incrementale, task graph, standard de-facto TS |
-| Linguaggio | TypeScript end-to-end | Tipi condivisi tra frontend, backend, agenti e contratti; una sola toolchain |
-| Backend | NestJS | Modularità enforced (DI, module boundaries), ecosistema enterprise, testabilità |
-| ORM | Prisma + Repository Pattern | Schema tipizzato, migration robuste; il repository isola il dominio dall'ORM |
-| Code/Queue | BullMQ su Redis | Retry, priorità, rate, delayed jobs; operativamente semplice |
-| LLM | Adapter provider-agnostico (Anthropic first-class) | Tool calling e streaming nativi; nessun lock-in nel dominio |
-| Frontend | React 18 + Vite + Tailwind + Zustand + React Query | Richiesto da roadmap (FASE 8); separazione stato server/client |
-| Editor | Monaco | Standard industriale, LSP-ready, richiesto (FASE 9) |
-| Sandbox | Docker container per progetto (gVisor/Firecracker come evoluzione) | Isolamento reale subito, path di hardening chiaro |
-| Edge | Caddy | TLS automatico (ACME), API di configurazione dinamica per domini custom |
-| Observability | OpenTelemetry + Prometheus + Grafana + Loki | Vendor-neutral, correlazione trace↔log↔metriche |
+| Layer         | Scelta                                                             | Motivazione principale (dettaglio in ADR §12)                                   |
+| ------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------- |
+| Monorepo      | pnpm workspaces + Turborepo                                        | Cache incrementale, task graph, standard de-facto TS                            |
+| Linguaggio    | TypeScript end-to-end                                              | Tipi condivisi tra frontend, backend, agenti e contratti; una sola toolchain    |
+| Backend       | NestJS                                                             | Modularità enforced (DI, module boundaries), ecosistema enterprise, testabilità |
+| ORM           | Prisma + Repository Pattern                                        | Schema tipizzato, migration robuste; il repository isola il dominio dall'ORM    |
+| Code/Queue    | BullMQ su Redis                                                    | Retry, priorità, rate, delayed jobs; operativamente semplice                    |
+| LLM           | Adapter provider-agnostico (Anthropic first-class)                 | Tool calling e streaming nativi; nessun lock-in nel dominio                     |
+| Frontend      | React 18 + Vite + Tailwind + Zustand + React Query                 | Richiesto da roadmap (FASE 8); separazione stato server/client                  |
+| Editor        | Monaco                                                             | Standard industriale, LSP-ready, richiesto (FASE 9)                             |
+| Sandbox       | Docker container per progetto (gVisor/Firecracker come evoluzione) | Isolamento reale subito, path di hardening chiaro                               |
+| Edge          | Caddy                                                              | TLS automatico (ACME), API di configurazione dinamica per domini custom         |
+| Observability | OpenTelemetry + Prometheus + Grafana + Loki                        | Vendor-neutral, correlazione trace↔log↔metriche                                 |
 
 ### 8.3 Stile architetturale
 
@@ -569,15 +569,15 @@ Decisioni strutturali chiave:
 
 ### 10.1 Superfici di rischio e mitigazioni
 
-| Superficie | Rischio | Mitigazione architetturale |
-|---|---|---|
-| Codice generato eseguito in sandbox | Escape, abuso risorse, exfiltration | Container non privilegiati, no docker socket, filesystem effimero, limiti CPU/RAM/PID, rete egress con policy (default: solo registry npm consentito), timeout |
-| Preview pubbliche | Accesso non autorizzato a sandbox altrui | URL firmati con scadenza, verifica membership a ogni richiesta nel preview-proxy |
-| Prompt injection nei contenuti utente | L'agente esegue istruzioni ostili presenti nei file | Tool con permessi scoped al progetto; azioni distruttive (delete massivo, deploy) confermate fuori banda dall'utente; nessun tool con accesso cross-tenant |
-| Secrets utente (env delle app) | Leak nei log o nel contesto LLM | Secrets cifrati at-rest (envelope encryption), mai inclusi nel contesto agentico, redazione automatica nei log |
-| Webhook Stripe | Replay/forgery | Verifica firma, idempotency key, processing transazionale |
-| API pubblica | Abuso, brute force | Rate limiting distribuito (Redis), lockout progressivo su auth, WAF a edge |
-| JWT | Furto token | Access token breve (15 min) + refresh token ruotato con revoca in DB, binding al device fingerprint |
+| Superficie                            | Rischio                                             | Mitigazione architetturale                                                                                                                                     |
+| ------------------------------------- | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Codice generato eseguito in sandbox   | Escape, abuso risorse, exfiltration                 | Container non privilegiati, no docker socket, filesystem effimero, limiti CPU/RAM/PID, rete egress con policy (default: solo registry npm consentito), timeout |
+| Preview pubbliche                     | Accesso non autorizzato a sandbox altrui            | URL firmati con scadenza, verifica membership a ogni richiesta nel preview-proxy                                                                               |
+| Prompt injection nei contenuti utente | L'agente esegue istruzioni ostili presenti nei file | Tool con permessi scoped al progetto; azioni distruttive (delete massivo, deploy) confermate fuori banda dall'utente; nessun tool con accesso cross-tenant     |
+| Secrets utente (env delle app)        | Leak nei log o nel contesto LLM                     | Secrets cifrati at-rest (envelope encryption), mai inclusi nel contesto agentico, redazione automatica nei log                                                 |
+| Webhook Stripe                        | Replay/forgery                                      | Verifica firma, idempotency key, processing transazionale                                                                                                      |
+| API pubblica                          | Abuso, brute force                                  | Rate limiting distribuito (Redis), lockout progressivo su auth, WAF a edge                                                                                     |
+| JWT                                   | Furto token                                         | Access token breve (15 min) + refresh token ruotato con revoca in DB, binding al device fingerprint                                                            |
 
 ### 10.2 Modello RBAC
 
@@ -591,63 +591,73 @@ Ogni azione mutativa rilevante (auth, membership, deploy, billing, delete) produ
 
 ## 11. Requisiti non funzionali
 
-| Categoria | Target v1 | Come l'architettura lo garantisce |
-|---|---|---|
-| **Latenza percepita AI** | Primo token < 2s dalla submit | Streaming end-to-end (LLM→worker→Redis→WS→UI), nessun buffering intermedio |
-| **Time-to-preview** | App semplice < 3 min dal prompt | Pipeline agentica parallela dove possibile, sandbox pool pre-warmed, template base cache-ati |
-| **Disponibilità API** | 99.9% | API stateless orizzontali, DB gestito con replica, code durevoli |
-| **Durabilità codice utente** | Zero perdita oltre l'ultimo autosave (≤5s) | VFS su Postgres+S3, snapshot, ledger di versioni |
-| **Isolamento tenant** | Nessun accesso cross-tenant | Scoping a livello service+query, sandbox per progetto, URL firmati |
-| **Scalabilità run agentiche** | Lineare con i worker | Code BullMQ, worker stateless, concorrenza configurabile |
-| **Costi AI** | Tracciati per run, per progetto, per workspace | UsageRecord per ogni chiamata LLM, budget e cap per piano |
-| **Testabilità** | Ogni modulo testabile in isolamento | DI ovunque, repository pattern, contratti espliciti, clock/random iniettabili |
-| **DX interna** | Onboarding dev < 1 giorno | Monorepo, docker compose dev completo, seed data, docs |
+| Categoria                     | Target v1                                      | Come l'architettura lo garantisce                                                            |
+| ----------------------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| **Latenza percepita AI**      | Primo token < 2s dalla submit                  | Streaming end-to-end (LLM→worker→Redis→WS→UI), nessun buffering intermedio                   |
+| **Time-to-preview**           | App semplice < 3 min dal prompt                | Pipeline agentica parallela dove possibile, sandbox pool pre-warmed, template base cache-ati |
+| **Disponibilità API**         | 99.9%                                          | API stateless orizzontali, DB gestito con replica, code durevoli                             |
+| **Durabilità codice utente**  | Zero perdita oltre l'ultimo autosave (≤5s)     | VFS su Postgres+S3, snapshot, ledger di versioni                                             |
+| **Isolamento tenant**         | Nessun accesso cross-tenant                    | Scoping a livello service+query, sandbox per progetto, URL firmati                           |
+| **Scalabilità run agentiche** | Lineare con i worker                           | Code BullMQ, worker stateless, concorrenza configurabile                                     |
+| **Costi AI**                  | Tracciati per run, per progetto, per workspace | UsageRecord per ogni chiamata LLM, budget e cap per piano                                    |
+| **Testabilità**               | Ogni modulo testabile in isolamento            | DI ovunque, repository pattern, contratti espliciti, clock/random iniettabili                |
+| **DX interna**                | Onboarding dev < 1 giorno                      | Monorepo, docker compose dev completo, seed data, docs                                       |
 
 ---
 
 ## 12. Decisioni architetturali (ADR)
 
 ### ADR-001 — TypeScript end-to-end
+
 **Decisione:** un solo linguaggio per frontend, backend, worker e contratti.
 **Motivazione:** il valore più alto del monorepo è la condivisione dei tipi (DTO, eventi, protocollo realtime, tool schema degli agenti). Con due linguaggi (es. Python per gli agenti) i contratti andrebbero duplicati o generati, introducendo drift. L'ecosistema TS copre tutte le esigenze (SDK LLM, Docker API, Stripe).
 **Alternativa scartata:** FastAPI per il backend — eccellente, ma spezza la catena dei tipi e raddoppia toolchain, CI e convenzioni.
 
 ### ADR-002 — Modular monolith + worker, non microservizi
+
 **Decisione:** core API monolitico a moduli NestJS; agenti, build e deploy in worker separati.
 **Motivazione:** i microservizi anticipati moltiplicano i costi (deploy, versioning, osservabilità, transazioni) senza benefici a questa scala. I confini di modulo enforced (DI + lint su import) preservano l'estraibilità futura. I worker sono separati perché hanno profili di scaling e di risorse radicalmente diversi dall'API.
 **Trigger di ripensamento:** se un modulo sviluppa esigenze di scaling o rilascio indipendenti (probabile primo candidato: Agent Engine), viene estratto lungo i contratti già esistenti.
 
 ### ADR-003 — Pipeline multi-agente specializzata
+
 **Decisione:** agenti distinti (Planner, Architect, Builder, Coding, Review, Testing, Refactor, Fix, Deploy) orchestrati da un run coordinator, ciascuno con prompt template, tool set e criteri di uscita propri.
 **Motivazione:** un singolo agente generalista degrada su task lunghi (context bloat, perdita di piano). La specializzazione consente contesti piccoli e mirati, retry per singolo step, misurabilità del punto di fallimento, e tuning indipendente dei prompt.
 **Costo accettato:** maggiore latenza di orchestrazione, mitigata da parallelizzazione (es. Review e Testing concorrenti).
 
 ### ADR-004 — VFS come fonte di verità, sandbox effimere
+
 **Decisione:** i file vivono in PostgreSQL (metadata/albero) + object storage (contenuti, content-addressed); le sandbox sono materializzazioni usa-e-getta.
 **Motivazione:** durabilità, snapshot/rollback O(1) (puntatori a versioni), recovery banale da crash, dedup dei contenuti tra snapshot e progetti clonati da template.
 **Alternativa scartata:** filesystem persistente per sandbox (volumi) — accoppia la vita dei dati a quella del container e rende snapshot e recovery costosi.
 
 ### ADR-005 — Docker container per sandbox in v1, con astrazione runtime
+
 **Decisione:** isolamento tramite container Docker non privilegiati con hard limits; l'orchestratore parla a un'interfaccia `SandboxRuntime` astratta.
 **Motivazione:** Docker offre isolamento adeguato per la v1 con complessità operativa minima; l'interfaccia astratta consente di sostituire con gVisor/Firecracker per hardening senza toccare i chiamanti.
 
 ### ADR-006 — BullMQ/Redis per l'asincrono, non Kafka
+
 **Decisione:** code job e pub/sub su Redis.
 **Motivazione:** i pattern richiesti sono job queue (retry, priorità, delayed) e fan-out realtime — esattamente ciò che BullMQ+Redis fanno bene. Kafka aggiunge valore solo con throughput e retention che questa piattaforma non ha in v1.
 
 ### ADR-007 — Prisma dietro Repository Pattern
+
 **Decisione:** Prisma come ORM, mai importato direttamente nei service: ogni aggregato ha un repository con interfaccia propria.
 **Motivazione:** la roadmap richiede esplicitamente il Repository Pattern (FASE 2); l'interfaccia consente test unit con in-memory repo e protegge il dominio da lock-in ORM.
 
 ### ADR-008 — Streaming: WebSocket per sessioni IDE, SSE per run singole
+
 **Decisione:** WebSocket per il canale di sessione (bidirezionale: eventi file, log, chat); SSE come trasporto degradato/semplice per lo streaming di una singola run (es. integrazioni, retry semplici con `Last-Event-ID`).
 **Motivazione:** la roadmap richiede entrambi (FASE 7); assegnare a ciascuno il caso d'uso in cui eccelle evita di reimplementare la resumability sul WS e la bidirezionalità sull'SSE.
 
 ### ADR-009 — Caddy come edge per deploy e preview
+
 **Decisione:** Caddy gestisce TLS (ACME automatico), domini custom e routing verso artifact statici/app server.
 **Motivazione:** la FASE 12 richiede dominio+SSL; Caddy offre certificati automatici e API di configurazione dinamica, eliminando una pipeline di cert management custom.
 
 ### ADR-010 — Ledger crediti append-only
+
 **Decisione:** il saldo crediti non è mai una colonna aggiornata, ma la somma di un ledger immutabile, con riserva (hold) all'avvio run e consolidamento a fine run.
 **Motivazione:** auditabilità contabile, idempotenza dei webhook Stripe, correzioni tramite entry compensative — requisiti standard di qualunque sistema billing serio.
 
@@ -655,29 +665,29 @@ Ogni azione mutativa rilevante (auth, membership, deploy, billing, delete) produ
 
 ## 13. Mappatura architettura → fasi della roadmap
 
-| Fase | Deliverable | Elementi di questo documento che la governano |
-|---|---|---|
-| FASE 1 | Monorepo, tooling, shared packages | §8.4 struttura cartelle; ADR-001 |
-| FASE 2 | Backend core (auth, API, schema) | §5 M1–M3; §9 modello dati; ADR-002, ADR-007 |
-| FASE 3 | Agent Engine | §5 M4; §7.1–7.2; ADR-003 |
-| FASE 4 | Workspace Manager | §5 M2; UC-07, UC-10, UC-S1 |
-| FASE 5 | Virtual Filesystem | §5 M5; ADR-004 |
-| FASE 6 | Runtime/Sandbox | §5 M6; ADR-005; §10.1 |
-| FASE 7 | Code Streaming | §5 M7; ADR-008; §7.4 |
-| FASE 8 | Frontend foundation | §5 M14; §8.2 |
-| FASE 9 | Monaco IDE | §5 M14; UC-03 |
-| FASE 10 | AI Chat | §5 M14; UC-02 |
-| FASE 11 | Live Preview | §5 M8; UC-04 |
-| FASE 12 | Deploy | §5 M9; §7.3; ADR-009 |
-| FASE 13 | Dashboard | §5 M14, M12 |
-| FASE 14 | Projects | §5 M3; UC-08 |
-| FASE 15 | Templates | §5 M10; UC-09 |
-| FASE 16 | Billing | §5 M11; ADR-010; UC-11 |
-| FASE 17 | Settings | §5 M1, M14; UC-12 |
-| FASE 18 | Testing | §11 testabilità |
-| FASE 19 | Docker | §6.2; §8.1 |
-| FASE 20 | CI/CD | §6.3 contract-first CI |
-| FASE 21 | Produzione | §10; §11; M13 |
+| Fase    | Deliverable                        | Elementi di questo documento che la governano |
+| ------- | ---------------------------------- | --------------------------------------------- |
+| FASE 1  | Monorepo, tooling, shared packages | §8.4 struttura cartelle; ADR-001              |
+| FASE 2  | Backend core (auth, API, schema)   | §5 M1–M3; §9 modello dati; ADR-002, ADR-007   |
+| FASE 3  | Agent Engine                       | §5 M4; §7.1–7.2; ADR-003                      |
+| FASE 4  | Workspace Manager                  | §5 M2; UC-07, UC-10, UC-S1                    |
+| FASE 5  | Virtual Filesystem                 | §5 M5; ADR-004                                |
+| FASE 6  | Runtime/Sandbox                    | §5 M6; ADR-005; §10.1                         |
+| FASE 7  | Code Streaming                     | §5 M7; ADR-008; §7.4                          |
+| FASE 8  | Frontend foundation                | §5 M14; §8.2                                  |
+| FASE 9  | Monaco IDE                         | §5 M14; UC-03                                 |
+| FASE 10 | AI Chat                            | §5 M14; UC-02                                 |
+| FASE 11 | Live Preview                       | §5 M8; UC-04                                  |
+| FASE 12 | Deploy                             | §5 M9; §7.3; ADR-009                          |
+| FASE 13 | Dashboard                          | §5 M14, M12                                   |
+| FASE 14 | Projects                           | §5 M3; UC-08                                  |
+| FASE 15 | Templates                          | §5 M10; UC-09                                 |
+| FASE 16 | Billing                            | §5 M11; ADR-010; UC-11                        |
+| FASE 17 | Settings                           | §5 M1, M14; UC-12                             |
+| FASE 18 | Testing                            | §11 testabilità                               |
+| FASE 19 | Docker                             | §6.2; §8.1                                    |
+| FASE 20 | CI/CD                              | §6.3 contract-first CI                        |
+| FASE 21 | Produzione                         | §10; §11; M13                                 |
 
 ---
 
