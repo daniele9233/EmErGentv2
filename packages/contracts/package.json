@@ -1,0 +1,27 @@
+{
+  "name": "@emergent/contracts",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shared platform contracts: branded ids, API envelopes, error codes and RBAC matrix",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@emergent/config": "workspace:*",
+    "typescript": "~5.9.3",
+    "vitest": "^4.1.10"
+  }
+}
